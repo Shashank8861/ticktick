@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:scheduler/notificationservice.dart';
 import 'auth/firebase_user_provider.dart';
 import 'auth/auth_util.dart';
 
@@ -9,14 +10,28 @@ import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import 'index.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+
+void printHello() {
+  final DateTime now = DateTime.now();
+  //final int isolateId =Isolate.current.hashCode;
+  print("hello");
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
+  await AndroidAlarmManager.initialize();
   await Firebase.initializeApp();
 
   FFAppState(); // Initialize FFAppState
 
   runApp(MyApp());
+  final int helloAlarmID = 0;
+  await AndroidAlarmManager.periodic(
+      const Duration(minutes: 1), helloAlarmID, printHello);
 }
 
 class MyApp extends StatefulWidget {

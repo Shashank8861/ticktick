@@ -9,6 +9,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:scheduler/notificationservice.dart';
+import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 
 class CreatenewWidget extends StatefulWidget {
   const CreatenewWidget({Key key}) : super(key: key);
@@ -296,6 +298,15 @@ class _CreatenewWidgetState extends State<CreatenewWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 16),
                   child: FFButtonWidget(
                     onPressed: () async {
+                      // FlutterAlarmClock.createAlarm(
+                      //     datePicked1.hour, datePicked1.minute);
+                      NotificationService().showNotification(
+                          1,
+                          userNameController.text,
+                          "Starts now",
+                          int.parse(datePicked1
+                              .difference(DateTime.now())
+                              .toString()));
                       final alarmsCreateData = createAlarmsRecordData(
                         name: userNameController.text,
                         start: dateTimeFormat('jm', datePicked1),
